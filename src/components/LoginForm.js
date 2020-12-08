@@ -1,32 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useMutation } from '@apollo/client';
-import { LOGIN, ALL_BOOKS, ALL_AUTHORS } from '../queries';
+import React, { useState } from 'react';
+import useSignIn from '../hooks/useSignIn';
 
-const LoginForm = ({
-  show, setToken, setPage, setFavoriteGenre,
-}) => {
+const LoginForm = ({ show }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [login, { loading, error, data }] = useMutation(LOGIN, {
-    refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
-  });
-
-  useEffect(() => {
-    if (data) {
-      const token = data.login.value;
-      setToken(token);
-      setPage('authors');
-      setFavoriteGenre(String(data.login.favoriteGenre));
-      console.log('token:', token);
-      console.log('data:', data);
-      localStorage.setItem('library-user-token', token);
-      console.log('localStorage:', localStorage);
-    }
-  }, [data]) // eslint-disable-line
-
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
+  const [signIn] = useSignIn();
 
   if (!show) {
     return null;
@@ -34,11 +13,12 @@ const LoginForm = ({
 
   const submit = async (event) => {
     event.preventDefault();
-
-    console.log('login...');
-
-    login({ variables: { username, password } });
-    console.log(loading, error, data);
+    try {
+      await signIn({ username, password });
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
+    }
   };
 
   return (
