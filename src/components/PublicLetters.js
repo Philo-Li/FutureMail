@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/client';
 import { USER, FIND_BOOKS_BY_GENRE } from '../queries';
 
-const Recommend = ({ show, favoriteGenre }) => {
+const PublicLetters = ({ show, favoriteGenre }) => {
   const [getBooks, result] = useLazyQuery(FIND_BOOKS_BY_GENRE);
   const { loading, error, data } = useQuery(USER);
 
@@ -21,7 +21,6 @@ const Recommend = ({ show, favoriteGenre }) => {
   if (error) return `Error! ${error.message}`;
 
   const booksToShow = result.data.allBooks;
-  console.log(booksToShow, result.data);
 
   return (
     <div>
@@ -54,4 +53,4 @@ const Recommend = ({ show, favoriteGenre }) => {
   );
 };
 
-export default Recommend;
+export default PublicLetters;

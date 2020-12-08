@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useSignIn from '../hooks/useSignIn';
 
-const LoginForm = ({ show }) => {
+const SignInForm = ({ show }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -45,4 +45,4 @@ const LoginForm = ({ show }) => {
   );
 };
 
-export default LoginForm;
+export default SignInForm;

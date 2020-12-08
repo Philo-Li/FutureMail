@@ -1,110 +1,77 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable max-len */
-import React, { useState } from 'react';
-import { useApolloClient, useSubscription } from '@apollo/client';
-import Authors from './components/Authors';
-import Books from './components/Books';
-import NewBook from './components/NewBook';
-import Recommend from './components/Recommend';
-import LoginForm from './components/LoginForm';
-import { BOOK_ADDED, FIND_BOOKS_BY_GENRE } from './queries';
+import React from 'react';
+import { useApolloClient } from '@apollo/client';
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link, Redirect,
+} from 'react-router-dom';
+import { Nav, Button } from 'react-bootstrap';
+import Navbar from 'react-bootstrap/Navbar';
+
+import Home from './components/Home';
+import PublicLetters from './components/PublicLetters';
+import Footer from './components/Footer';
+import SignInForm from './components/SignInForm';
 
 const App = () => {
-  const [page, setPage] = useState('authors');
-  const [token, setToken] = useState(null);
-  const [favoriteGenre, setFavoriteGenre] = useState(null);
   const client = useApolloClient();
 
-  const updateCacheWith = (addedBook) => {
-    const includedIn = (set, object) => set.map((p) => p.id).includes(object.id);
+  const Menu = () => {
+    const padding = {
+      paddingRight: 5,
+    };
 
-    const dataInStoreBooks = client.readQuery({ query: FIND_BOOKS_BY_GENRE, variables: { genreToSearch: '' } });
-    // console.log('dataInStoreBooks1', dataInStoreBooks)
-    if (!includedIn(dataInStoreBooks.allBooks, addedBook)) {
-      client.writeQuery({
-        query: FIND_BOOKS_BY_GENRE,
-        variables: { genreToSearch: '' },
-        data: {
-          allBooks: [...dataInStoreBooks.allBooks, addedBook],
-        },
-      });
-    }
-    const dataInStoreRecommend = client.readQuery({ query: FIND_BOOKS_BY_GENRE, variables: { genreToSearch: favoriteGenre } });
-    // console.log('dataInStoreRecommend1', dataInStoreRecommend)
-    if (!includedIn(dataInStoreRecommend.allBooks, addedBook)) {
-      client.writeQuery({
-        query: FIND_BOOKS_BY_GENRE,
-        variables: { genreToSearch: favoriteGenre },
-        data: {
-          allBooks: [...dataInStoreRecommend.allBooks, addedBook],
-        },
-      });
-    }
+    const handleLogout = async (event) => {
+      event.preventDefault();
+      localStorage.clear();
+      client.resetStore();
+    };
+
+    return (
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/" as="span">
+              <Link style={padding} to="/">首页</Link>
+            </Nav.Link>
+            <Nav.Link href="/blogs" as="span">
+              <Link style={padding} to="/public_letters">公开信件</Link>
+            </Nav.Link>
+            <Nav.Link href="/signin" as="span">
+              <Link style={padding} to="/signin">登录</Link>
+            </Nav.Link>
+            <Button variant="secondary" type="submit" onClick={handleLogout}>登出</Button>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    );
   };
-
-  useSubscription(BOOK_ADDED, {
-    onSubscriptionData: ({ subscriptionData }) => {
-      const addedBook = subscriptionData.data.bookAdded;
-      window.alert(`${addedBook.title} added`);
-      console.log('subscriptionData', subscriptionData);
-      updateCacheWith(addedBook);
-    },
-  });
-
-  const login = () => (
-    <div>
-      <button onClick={() => setPage('authors')}>authors</button>
-      <button onClick={() => setPage('books')}>books</button>
-      <button onClick={() => setPage('login')}>login</button>
-      <LoginForm
-        show={page === 'login'}
-        setToken={setToken}
-        setPage={setPage}
-        setFavoriteGenre={setFavoriteGenre}
-      />
-    </div>
-  );
-
-  const logout = () => {
-    setPage('authors');
-    setToken(null);
-    localStorage.clear();
-    client.resetStore();
-  };
-
-  const loggedin = () => (
-    <div>
-      <button onClick={() => setPage('authors')}>authors</button>
-      <button onClick={() => setPage('books')}>books</button>
-      <button onClick={() => setPage('add')}>add book</button>
-      <button onClick={() => setPage('recommend')}>recommend</button>
-      <button onClick={() => logout()}>logout</button>
-      <NewBook
-        show={page === 'add'}
-      />
-
-      <Recommend
-        show={page === 'recommend'}
-        favoriteGenre={favoriteGenre}
-      />
-    </div>
-  );
 
   return (
-    <div>
-      <div>
-        {!token ? login() : loggedin() }
+    <Router>
+      <div className="container">
+        <Menu />
+        <h2>未来信箱</h2>
+        <div>
+          <Switch>
+            <Route path="/public_letters" exact>
+              <PublicLetters />
+            </Route>
+            <Route path="/signin" exact>
+              <SignInForm />
+            </Route>
+            <Route path="/user/:id" exact>
+              <SignInForm />
+            </Route>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+        </div>
+        <Footer />
       </div>
-
-      <Authors
-        show={page === 'authors'}
-      />
-
-      <Books
-        show={page === 'books'}
-      />
-
-    </div>
+    </Router>
   );
 };
 
