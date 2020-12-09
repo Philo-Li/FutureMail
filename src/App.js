@@ -8,7 +8,7 @@ import { Nav, Button } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 
 import Home from './components/Home';
-import PublicLetters from './components/PublicLettersList';
+import PublicLettersList from './components/PublicLettersList';
 import Footer from './components/Footer';
 import SignInForm from './components/SignInForm';
 
@@ -55,7 +55,7 @@ const App = () => {
         <div>
           <Switch>
             <Route path="/public_letters" exact>
-              <PublicLetters />
+              <PublicLettersList />
             </Route>
             <Route path="/signin" exact>
               <SignInForm />
