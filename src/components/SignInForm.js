@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import useSignIn from '../hooks/useSignIn';
 import useField from '../hooks/useField';
@@ -7,6 +8,7 @@ import useField from '../hooks/useField';
 const SignInForm = () => {
   const username = useField('username');
   const password = useField('password');
+  const history = useHistory();
 
   const [signIn] = useSignIn();
 
@@ -15,6 +17,7 @@ const SignInForm = () => {
     try {
       console.log(username.value, password.value);
       await signIn({ username: username.value, password: password.value });
+      history.push('/');
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e);

@@ -8,7 +8,7 @@ import { Nav, Button } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 
 import Home from './components/Home';
-import PublicLetters from './components/PublicLetters';
+import PublicLetters from './components/PublicLettersList';
 import Footer from './components/Footer';
 import SignInForm from './components/SignInForm';
 
@@ -51,7 +51,7 @@ const App = () => {
     <Router>
       <div className="container">
         <Menu />
-        <h2>未来信箱</h2>
+        <h2>未来邮箱</h2>
         <div>
           <Switch>
             <Route path="/public_letters" exact>
