@@ -2,7 +2,7 @@ import React from 'react';
 import { useApolloClient } from '@apollo/client';
 import {
   BrowserRouter as Router,
-  Switch, Route, Link, Redirect,
+  Switch, Route, Link, Redirect, useHistory,
 } from 'react-router-dom';
 import { Nav, Button } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
@@ -14,16 +14,20 @@ import SignInForm from './components/SignInForm';
 
 const App = () => {
   const client = useApolloClient();
+  const history = useHistory();
 
   const Menu = () => {
     const padding = {
       paddingRight: 5,
     };
 
+    const token = localStorage.getItem('futuremail-user-token');
+
     const handleLogout = async (event) => {
       event.preventDefault();
       localStorage.clear();
       client.resetStore();
+      history.push('/');
     };
 
     return (
@@ -37,10 +41,12 @@ const App = () => {
             <Nav.Link href="/blogs" as="span">
               <Link style={padding} to="/public_letters">公开信件</Link>
             </Nav.Link>
-            <Nav.Link href="/signin" as="span">
-              <Link style={padding} to="/signin">登录</Link>
-            </Nav.Link>
-            <Button variant="secondary" type="submit" onClick={handleLogout}>登出</Button>
+            {!token && (
+              <Nav.Link href="/signin" as="span">
+                <Link style={padding} to="/signin">登录</Link>
+              </Nav.Link>
+            )}
+            {token && <Button variant="secondary" type="submit" onClick={handleLogout}>登出</Button>}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
