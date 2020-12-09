@@ -13,6 +13,7 @@ const SignInForm = () => {
   const submit = async (event) => {
     event.preventDefault();
     try {
+      console.log(username.value, password.value);
       await signIn({ username: username.value, password: password.value });
     } catch (e) {
       // eslint-disable-next-line no-console

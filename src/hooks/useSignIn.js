@@ -7,7 +7,8 @@ const useSignIn = () => {
   const apolloClient = useApolloClient();
 
   const signIn = async ({ username, password }) => {
-    mutate({ variables: { username, password } });
+    await mutate({ variables: { username, password } });
+    console.log('result', result);
     localStorage.setItem('futuremail-user-token', result.data.authorize.accessToken);
     apolloClient.resetStore();
   };
