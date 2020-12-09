@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+import { Form, Button } from 'react-bootstrap';
 import useSignIn from '../hooks/useSignIn';
+import useField from '../hooks/useField';
 
-const SignInForm = ({ show }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const SignInForm = () => {
+  const username = useField('username');
+  const password = useField('password');
 
   const [signIn] = useSignIn();
-
-  if (!show) {
-    return null;
-  }
 
   const submit = async (event) => {
     event.preventDefault();
     try {
-      await signIn({ username, password });
+      await signIn({ username: username.value, password: password.value });
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e);
@@ -23,24 +22,20 @@ const SignInForm = ({ show }) => {
 
   return (
     <div>
-      <form onSubmit={submit}>
-        <div>
-          name
-          <input
-            value={username}
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
+      <h2>登录</h2>
+      <Form id="signinform" onSubmit={submit}>
+        <Form.Group>
+          <div>
+            <Form.Label>用户名或邮箱:</Form.Label>
+            <Form.Control {...username} />
+          </div>
+          <div>
+            <Form.Label>密码:</Form.Label>
+            <Form.Control {...password} />
+          </div>
+          <Button variant="primary" id="login-button" type="submit">login</Button>
+        </Form.Group>
+      </Form>
     </div>
   );
 };
