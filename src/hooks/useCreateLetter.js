@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { CREATE_LETTER } from '../graphql/mutations';
 
-const useCreateArticle = () => {
+const useCreateLetter = () => {
   const history = useHistory();
   const [mutate, result] = useMutation(CREATE_LETTER);
 
@@ -16,4 +16,4 @@ const useCreateArticle = () => {
   return [createArticle, result];
 };
 
-export default useCreateArticle;
+export default useCreateLetter;

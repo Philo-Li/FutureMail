@@ -2,7 +2,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
-import useCreateLetter from '../hooks/useCreateLettter';
+import useCreateLetter from '../hooks/useCreateLetter';
 import useField from '../hooks/useField';
 
 const CreateLetterForm = () => {
