@@ -1,9 +1,8 @@
 /* eslint-disable object-curly-newline */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Col } from 'react-bootstrap';
 import DatePicker from 'react-date-picker';
 import useCreateLetter from '../hooks/useCreateLetter';
 import useDatePicker from '../hooks/useDatePicker';
@@ -34,8 +33,8 @@ const CreateLetterForm = () => {
   const submit = async (event) => {
     event.preventDefault();
     try {
-      // await createLetter(variables);
-      // history.push('/');
+      await createLetter(variables);
+      history.push('/');
       console.log('variables', variables);
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -59,19 +58,23 @@ const CreateLetterForm = () => {
           <Form.Label>正文</Form.Label>
           <Form.Control as="textarea" rows={10} {...text} />
         </Form.Group>
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group controlId="letterSendTime">
           <Form.Label>发送到：</Form.Label>
           <DatePicker {...sendTime} />
         </Form.Group>
-        <Form.Group as={Row} controlId="formBasicEmail">
-          <Form.Label column sm="2">收件人邮箱: </Form.Label>
-          <Col sm="10">
-            <Form.Control {...email} placeholder="如 name@example.com" inline="true" />
-          </Col>
-          <Form.Label column sm="2">发件人昵称: </Form.Label>
-          <Col sm="10">
-            <Form.Control {...author} placeholder="发件人昵称" />
-          </Col>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Row>
+            <Form.Label column sm={1.5}>收件人邮箱: </Form.Label>
+            <Col xs={5}>
+              <Form.Control {...email} placeholder="如：name@example.com" inline="true" />
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Label column sm={1.5}>发件人昵称: </Form.Label>
+            <Col xs={5}>
+              <Form.Control {...author} placeholder="填写昵称" />
+            </Col>
+          </Form.Row>
         </Form.Group>
         <Form.Group>
           <Form.Group controlId="formBasicCheckbox">
