@@ -63,7 +63,6 @@ const App = () => {
     <Router>
       <div className="container">
         <Menu />
-        <h2>未来邮箱</h2>
         <div>
           <Switch>
             <Route path="/public_letters" exact>

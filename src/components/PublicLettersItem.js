@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import useDate from '../hooks/useDate';
 
 const PublicLettersItem = ({ item }) => {
   // eslint-disable-next-line arrow-body-style
-  const handleLike = async (letter) => {
-    return letter;
-  };
+  // const handleLike = async (letter) => {
+  //   return letter;
+  // };
 
   const { year, month, day } = useDate(item.createdAt);
 
@@ -22,10 +22,10 @@ const PublicLettersItem = ({ item }) => {
           <div>
             {item.text}
           </div>
-          <div>
+          {/* <div>
             {item.likes ? item.likes : 0}
             <Button variant="info" id="like-button" onClick={() => handleLike(item)}>like</Button>
-          </div>
+          </div> */}
         </Card.Body>
       </Card>
     </div>

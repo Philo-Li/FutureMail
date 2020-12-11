@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form } from 'react-bootstrap';
 import PublicLettersItem from './PublicLettersItem';
 import useLetters from '../hooks/useLetters';
 
@@ -14,12 +15,16 @@ const PublicLettersList = () => {
 
   return (
     <div>
-      <h2>公开信件</h2>
-      {lettersNodes.map((letter) => (
-        <div key={letter.id}>
-          <PublicLettersItem item={letter} />
-        </div>
-      ))}
+      <h2>未来邮箱 && 匿名公开信件</h2>
+      <Form>
+        {lettersNodes.map((letter) => (
+          <div key={letter.id}>
+            <Form.Group>
+              <PublicLettersItem item={letter} />
+            </Form.Group>
+          </div>
+        ))}
+      </Form>
     </div>
   );
 };
