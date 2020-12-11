@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
+import useDate from '../hooks/useDate';
 
 const PublicLettersItem = ({ item }) => {
   // eslint-disable-next-line arrow-body-style
@@ -7,9 +9,14 @@ const PublicLettersItem = ({ item }) => {
     return letter;
   };
 
+  const { year, month, day } = useDate(item.createdAt);
+
   return (
     <div>
       <Card>
+        <Card.Header>
+          来自 {year} 年 {month} 月 {day} 日
+        </Card.Header>
         <Card.Body>
           <Card.Title>{item.title}</Card.Title>
           <div>

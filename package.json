@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.3.0",
     "apollo-link-context": "^1.0.20",
     "bootstrap": "^4.5.3",
+    "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "graphql": "^15.3.0",
     "react": "^17.0.1",

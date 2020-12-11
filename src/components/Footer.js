@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <div style={footerStyle}>
       <br />
-      <em>Future mail && 未来信箱</em>
+      <em>Future mail && 未来邮箱</em>
     </div>
   );
 };
