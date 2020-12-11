@@ -2,15 +2,16 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
+import DatePicker from 'react-date-picker';
 import useCreateLetter from '../hooks/useCreateLetter';
-import useField from '../hooks/useField';
+import useDatePicker from '../hooks/useDatePicker';
 import useLetterTitleField from '../hooks/useLetterTitleField';
 import useLetterTextField from '../hooks/useLetterTextField';
 
 const CreateLetterForm = () => {
   const title = useLetterTitleField('title');
   const text = useLetterTextField('text');
-  const sendTime = useField('sendTime');
+  const sendTime = useDatePicker();
   const history = useHistory();
 
   const [createLetter] = useCreateLetter();
@@ -43,9 +44,9 @@ const CreateLetterForm = () => {
           <Form.Label>正文</Form.Label>
           <Form.Control as="textarea" rows={10} {...text} type="text" />
         </Form.Group>
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group style={{ magin: 100 }} controlId="formBasicEmail">
           <Form.Label>发送到：</Form.Label>
-          <Form.Control type="sendTime" placeholder="发送时间" />
+          <DatePicker {...sendTime} type="sendTime" />
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Control type="email" placeholder="收件人邮箱: 如 name@example.com" />
