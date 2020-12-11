@@ -9,6 +9,14 @@ export const AUTHORIZE = gql`
   }
 `;
 
+export const CREATE_USER = gql`
+  mutation createUser($username: String!, $password: String!) {
+    createUser(user: { username: $username, password: $password }) {
+      username
+    }
+  }
+`;
+
 export const CREATE_LETTER = gql`
   mutation createLetter( $title: String!, $text: String!, $sendTime: String!  ) {
     createLetter(letter: { title: $title, text: $text, sendTime: $sendTime } ) {

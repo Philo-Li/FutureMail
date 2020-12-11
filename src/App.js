@@ -11,6 +11,7 @@ import Home from './components/Home';
 import PublicLettersList from './components/PublicLettersList';
 import Footer from './components/Footer';
 import SignInForm from './components/SignInForm';
+import SignUpForm from './components/SignUpForm';
 
 const App = () => {
   const client = useApolloClient();
@@ -42,6 +43,11 @@ const App = () => {
               <Link style={padding} to="/public_letters">公开信件</Link>
             </Nav.Link>
             {!token && (
+              <Nav.Link href="/signup" as="span">
+                <Link style={padding} to="/signup">注册</Link>
+              </Nav.Link>
+            )}
+            {!token && (
               <Nav.Link href="/signin" as="span">
                 <Link style={padding} to="/signin">登录</Link>
               </Nav.Link>
@@ -65,6 +71,9 @@ const App = () => {
             </Route>
             <Route path="/signin" exact>
               <SignInForm />
+            </Route>
+            <Route path="/signup" exact>
+              <SignUpForm />
             </Route>
             <Route path="/user/:id" exact>
               <SignInForm />
