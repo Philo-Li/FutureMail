@@ -8,12 +8,12 @@ const useCreateLetter = () => {
   const history = useHistory();
   const [mutate, result] = useMutation(CREATE_LETTER);
 
-  const createArticle = async ({ title, text, sendTime }) => {
+  const createLetter = async ({ title, text, sendTime }) => {
     mutate({ variables: { title, text, sendTime } });
     history.push('/');
   };
 
-  return [createArticle, result];
+  return [createLetter, result];
 };
 
 export default useCreateLetter;

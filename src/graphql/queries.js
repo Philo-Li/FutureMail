@@ -21,6 +21,22 @@ const LETTER_DETAILS = gql`
   }
 `;
 
+const REVIEW_DETAILS = gql`
+  fragment reviewDetails on Review {
+    id
+    text
+    createdAt
+    user {
+      id
+      username
+    }
+    letter{
+      id
+    }
+    letterId
+  }
+`;
+
 export const GET_LETTERS = gql`
   query getLetters(
     $orderBy: AllLettersOrderBy
@@ -51,4 +67,28 @@ export const GET_LETTERS = gql`
     }
   }
   ${LETTER_DETAILS}
+`;
+
+export const GET_AUTHORIZED_USER = gql`
+  query getAuthorizedUser($includeReviews: Boolean = false, $first: Int, $after: String) {
+    authorizedUser {
+      id
+      username
+      reviews (first: $first, after: $after) {
+        edges @include(if: $includeReviews) {
+          node {
+            ...reviewDetails
+          }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          totalCount
+          hasNextPage
+        }
+      }
+    }
+  }
+  ${REVIEW_DETAILS}
 `;

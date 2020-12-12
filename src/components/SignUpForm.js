@@ -2,7 +2,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
-import useSignIn from '../hooks/useSignIn';
 import useSignUp from '../hooks/useSignUp';
 import useField from '../hooks/useField';
 
@@ -12,15 +11,15 @@ const SignUpForm = () => {
   const passwordConfirm = useField('passwordConfirm');
   const history = useHistory();
 
-  const [signIn] = useSignIn();
-  const [signUp, result] = useSignUp();
+  const [signUp] = useSignUp();
 
   const submit = async (event) => {
     event.preventDefault();
     try {
-      await signUp({ username: username.value, password: password.value });
-      if (result) await signIn({ username: username.value, password: password.value });
-      history.push('/');
+      signUp({ username: username.value, password: password.value });
+      if (window.confirm('账号注册成功，现在登录？')) {
+        history.push('/signin');
+      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e);

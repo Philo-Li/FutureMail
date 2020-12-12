@@ -2,7 +2,7 @@ import React from 'react';
 import { useApolloClient } from '@apollo/client';
 import {
   BrowserRouter as Router,
-  Switch, Route, Link, Redirect, useHistory,
+  Switch, Route, Link, Redirect,
 } from 'react-router-dom';
 import { Nav, Button } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
@@ -12,23 +12,21 @@ import PublicLettersList from './components/PublicLettersList';
 import Footer from './components/Footer';
 import SignInForm from './components/SignInForm';
 import SignUpForm from './components/SignUpForm';
+import useAuthorizedUser from './hooks/useAuthorizedUser';
 
 const App = () => {
   const client = useApolloClient();
-  const history = useHistory();
+  const { authorizedUser } = useAuthorizedUser();
 
   const Menu = () => {
     const padding = {
       paddingRight: 5,
     };
 
-    const token = localStorage.getItem('futuremail-user-token');
-
     const handleLogout = async (event) => {
       event.preventDefault();
       localStorage.clear();
       client.resetStore();
-      history.push('/');
     };
 
     return (
@@ -42,17 +40,17 @@ const App = () => {
             <Nav.Link href="/blogs" as="span">
               <Link style={padding} to="/public_letters">公开信件</Link>
             </Nav.Link>
-            {!token && (
+            {!authorizedUser && (
               <Nav.Link href="/signup" as="span">
                 <Link style={padding} to="/signup">注册</Link>
               </Nav.Link>
             )}
-            {!token && (
+            {!authorizedUser && (
               <Nav.Link href="/signin" as="span">
                 <Link style={padding} to="/signin">登录</Link>
               </Nav.Link>
             )}
-            {token && <Button variant="secondary" type="submit" onClick={handleLogout}>登出</Button>}
+            {authorizedUser && <Button variant="secondary" type="submit" onClick={handleLogout}>登出</Button>}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
