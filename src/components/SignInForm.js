@@ -15,6 +15,7 @@ const SignInForm = () => {
   const submit = async (event) => {
     event.preventDefault();
     try {
+      // eslint-disable-next-line no-console
       console.log(username.value, password.value);
       await signIn({ username: username.value, password: password.value });
       history.push('/');

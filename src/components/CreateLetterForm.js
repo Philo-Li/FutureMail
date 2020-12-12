@@ -35,6 +35,7 @@ const CreateLetterForm = () => {
     try {
       await createLetter(variables);
       history.push('/');
+      // eslint-disable-next-line no-console
       console.log('variables', variables);
     } catch (e) {
       // eslint-disable-next-line no-console

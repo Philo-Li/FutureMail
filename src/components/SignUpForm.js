@@ -17,6 +17,7 @@ const SignUpForm = () => {
     event.preventDefault();
     try {
       signUp({ username: username.value, password: password.value });
+      // eslint-disable-next-line no-alert
       if (window.confirm('账号注册成功，现在登录？')) {
         history.push('/signin');
       }
