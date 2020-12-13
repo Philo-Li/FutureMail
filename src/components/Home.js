@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import '../index.css';
 import CreateLetterModal from './CreateLetterModal';
 import SlidesShow from './SlidesShow';
 import useAuthorizedUser from '../hooks/useAuthorizedUser';
@@ -15,7 +16,7 @@ const Home = () => {
       <SlidesShow />
       {authorizedUser && <CreateLetterModal />}
       {!authorizedUser && (
-        <div>
+        <div className="button1">
           <p>注册账号并开始写信</p>
           <Button variant="primary" onClick={() => history.push('/signup')}>
             注册

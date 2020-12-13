@@ -30,7 +30,7 @@ const SignUpForm = () => {
   return (
     <div>
       <h2>注册</h2>
-      <p>登录账号后可查看信件发送状态，评论和点赞公开信件，后续相关服务正在推出中……</p>
+      <p>登录账号后可查看信件发送状态，评论和点赞公开信件，后续功能正在推出中……</p>
       <Form id="signinform" onSubmit={submit}>
         <Form.Group>
           <div>

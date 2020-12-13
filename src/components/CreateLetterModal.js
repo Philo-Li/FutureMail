@@ -15,7 +15,7 @@ const CreateLetterModal = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={() => setShow(true)}>
+      <Button className="button1" variant="primary" onClick={() => setShow(true)}>
         开始写信
       </Button>
 
