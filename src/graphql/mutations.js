@@ -18,8 +18,22 @@ export const CREATE_USER = gql`
 `;
 
 export const CREATE_LETTER = gql`
-  mutation createLetter( $title: String!, $text: String!, $sendTime: String!  ) {
-    createLetter(letter: { title: $title, text: $text, sendTime: $sendTime } ) {
+  mutation createLetter(
+    $title: String!,
+    $text: String!,
+    $sentAt: DateTime!,
+    $author: String!,
+    $email: String!,
+    $setPrivate: Boolean!
+    ) {
+    createLetter(letter: {
+      title: $title,
+      text: $text,
+      sentAt: $sentAt,
+      author: $author,
+      email: $email,
+      setPrivate: $setPrivate
+    } ) {
       id
       user{
         id
@@ -27,12 +41,15 @@ export const CREATE_LETTER = gql`
         createdAt
       }
       title
-      titleEn
       userId
-      url
-      description
-      createdAt
       text
+      createdAt
+      reviewCount
+      likesCount
+      sentAt
+      author
+      email
+      setPrivate
     }
   }
 `;

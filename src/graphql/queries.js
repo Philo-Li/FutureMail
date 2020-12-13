@@ -5,7 +5,6 @@ const LETTER_DETAILS = gql`
   fragment letterDetails on Letter {
     id
     title
-    titleEn
     userId
     user {
       id
@@ -13,10 +12,11 @@ const LETTER_DETAILS = gql`
     }
     createdAt
     reviewCount
-    viewsCount
     likesCount
-    url
-    description
+    sentAt
+    author
+    email
+    setPrivate
     text
   }
 `;

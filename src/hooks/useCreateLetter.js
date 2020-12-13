@@ -8,8 +8,8 @@ const useCreateLetter = () => {
   const history = useHistory();
   const [mutate, result] = useMutation(CREATE_LETTER);
 
-  const createLetter = async ({ title, text, sendTime }) => {
-    mutate({ variables: { title, text, sendTime } });
+  const createLetter = async ({ title, text, sentAt, author, email, setPrivate }) => {
+    mutate({ variables: { title, text, sentAt, author, email, setPrivate } });
     history.push('/');
   };
 

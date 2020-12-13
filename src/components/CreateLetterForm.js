@@ -1,7 +1,6 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Form, Button, Col } from 'react-bootstrap';
 import DatePicker from 'react-date-picker';
 import useCreateLetter from '../hooks/useCreateLetter';
@@ -10,33 +9,33 @@ import useField from '../hooks/useField';
 import useLetterTitleField from '../hooks/useLetterTitleField';
 import useLetterTextField from '../hooks/useLetterTextField';
 
-const CreateLetterForm = () => {
-  const [isPrivate, setIsPrivate] = useState('false');
+const CreateLetterForm = ({ setShow }) => {
+  const [isPrivate, setIsPrivate] = useState(true);
   const title = useLetterTitleField('title');
   const text = useLetterTextField('text');
   const author = useField('author');
   const email = useField('email');
-  const sendTime = useDatePicker('sendTime');
-  const history = useHistory();
+  const sentAt = useDatePicker('sentAt');
 
   const [createLetter] = useCreateLetter();
 
   const variables = {
     title: title.value,
     text: text.value,
-    sendTime: sendTime.value,
+    sentAt: sentAt.value,
     author: author.value,
     email: email.value,
-    private: isPrivate,
+    setPrivate: isPrivate,
   };
 
   const submit = async (event) => {
     event.preventDefault();
     try {
       await createLetter(variables);
-      history.push('/');
-      // eslint-disable-next-line no-console
-      console.log('variables', variables);
+      // eslint-disable-next-line no-alert
+      if (window.confirm('信件发送成功，回到主页？')) {
+        setShow(false);
+      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e);
@@ -61,7 +60,7 @@ const CreateLetterForm = () => {
         </Form.Group>
         <Form.Group controlId="letterSendTime">
           <Form.Label>发送到：</Form.Label>
-          <DatePicker {...sendTime} />
+          <DatePicker {...sentAt} />
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Row>

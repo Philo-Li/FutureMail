@@ -11,13 +11,13 @@ const PublicLettersList = () => {
     ? letters.edges.map((edge) => edge.node)
     : [];
 
-  console.log('lettersNode', lettersNodes);
+  const publicLetters = lettersNodes.filter((letter) => letter.setPrivate === false);
 
   return (
     <div>
       <h2>未来邮箱 && 匿名公开信件</h2>
       <Form>
-        {lettersNodes.map((letter) => (
+        {publicLetters.map((letter) => (
           <div key={letter.id}>
             <Form.Group>
               <PublicLettersItem item={letter} />

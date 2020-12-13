@@ -33,7 +33,7 @@ const CreateLetterModal = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CreateLetterForm />
+          <CreateLetterForm setShow={setShow} />
         </Modal.Body>
       </Modal>
     </>
